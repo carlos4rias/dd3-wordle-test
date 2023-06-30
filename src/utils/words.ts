@@ -37,4 +37,8 @@ export function assignBoxesState(guessedWord: string, targetWord: string): BoxSt
   return boxesState;
 }
 
+export function isAWordFromTheDictionary(guess: string): boolean {
+  return rawWords.indexOf(guess) !== -1;
+}
+
 export default getRandomWord;
