@@ -9,7 +9,7 @@ import { GUESS_MAXIMUM_LENGTH, isAWordFromDictionary, MAXIMUM_TRIES } from "./ut
 
 function App() {
   const gameState = useStore();
-  const {guessRows, gameState: gameStatus, firstTimePlaying, showInstructions} = gameState
+  const {guessRows, gameState: gameStatus, firstTimePlaying, showInstructions, showStatistics} = gameState
   const [guessWord, setGuessWord, addCurrentGuessChar] = useGuessWord();
   const [showInvalidGuessModal, setShowInvalidGuessModal] = useState(false);
 
@@ -55,7 +55,7 @@ function App() {
           addCurrentGuessChar(char);
         }} />
       </section>
-      {gameIsOver && <GameOverModal gameStatus={gameStatus} />}
+      {(gameIsOver || showStatistics) && <GameOverModal gameStatus={gameStatus} />}
       { (firstTimePlaying || showInstructions) && <InstructionsModal/> }
       
     </div>

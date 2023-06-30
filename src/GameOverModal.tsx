@@ -6,7 +6,7 @@ interface GameOverModalProps {
 
 function GameOverModal({gameStatus}: GameOverModalProps) {
   const gameStore = useStore();
-  const {totalGames, victories, targetWord} = gameStore;
+  const {totalGames, victories, targetWord,} = gameStore;
 
   return (
     <div role="modal" className="absolute z-100 bg-white rounded border border-black text-center left-0 right-0 top-6 p-8 w-4/4 mx-auto">
@@ -24,11 +24,15 @@ function GameOverModal({gameStatus}: GameOverModalProps) {
         )}
         <p className="font-bold">4:10</p>
         <button 
-          className="bg-green-500 mt-3 mb-3 p-1 text-white rounded w-1/2 mx-auto"
-          onClick={() => {
-            gameStore.startNewGame();
-          }}
-        >Aceptar</button>
+            className="bg-green-500 mt-3 mb-3 p-1 text-white rounded w-1/2 mx-auto"
+            onClick={() => {
+              if(gameStatus !== 'playing') {
+                gameStore.startNewGame();
+              }
+              gameStore.setShowStatistics(false);
+            }}
+          >Aceptar</button>
+
       </div>
         
     </div>

@@ -16,10 +16,12 @@ interface GameStore {
   usedKeys: {[char: string]: BoxState};
   showInstructions: boolean;
   firstTimePlaying: boolean;
+  showStatistics: boolean;
   addNewGuess: (guess: string) => void;
   startNewGame: () => void;
   setFirstTimePlaying: () => void;
   setShowInstructions: (value: boolean) => void;
+  setShowStatistics: (value: boolean) => void;
 }
 
 export const useStore = create<GameStore>(
@@ -33,6 +35,7 @@ export const useStore = create<GameStore>(
       usedKeys: {},
       firstTimePlaying: true,
       showInstructions: false,
+      showStatistics: false,
       addNewGuess: (guess: string) => {
         const boxesState = assignBoxesState(guess, get().targetWord);
         const newGuessRows = [...get().guessRows, {
@@ -76,6 +79,13 @@ export const useStore = create<GameStore>(
         set((state: GameStore) => ({
           ...state,
           showInstructions: value,
+        }))
+      },
+
+      setShowStatistics(value: boolean) {
+        set((state: GameStore) => ({
+          ...state,
+          showStatistics: value,
         }))
       },
 
