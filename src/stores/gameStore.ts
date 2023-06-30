@@ -39,7 +39,7 @@ export const useStore = create<GameStore>(
       showStatistics: false,
       expireGameTime: (new Date().getTime()) + MAXIMUM_MINUTES,
       addNewGuess: (guess: string) => {
-        const boxesState = assignBoxesState(guess, get().targetWord);
+        const boxesState = assignBoxesState(guess.toLowerCase(), get().targetWord);
         const newGuessRows = [...get().guessRows, {
           guess, 
           boxStates: boxesState
