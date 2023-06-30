@@ -1,22 +1,22 @@
 import Box from "./Box";
-import { assignBoxesState, GUESS_MAXIMUM_LENGTH } from "./utils/words";
+import { BoxState, GUESS_MAXIMUM_LENGTH } from "./utils/words";
 
 interface RowProps {
   guess: string;
+  boxStates?: BoxState[];
 }
 
-function Row({guess = ''}: RowProps) {
+function Row({guess = '', boxStates = []}: RowProps) {
   const guessRemaining = GUESS_MAXIMUM_LENGTH - guess.length;
   const guessBoxes = guess.split('').concat(Array(guessRemaining).fill(''));
-
-  const guessBoxStates = assignBoxesState(guess);
-  console.log(guessBoxStates)
-
+  
+  console.log(guess)
+  console.log(boxStates)
   return (
-    <div className="grid grid-cols-5 gap-3">
+    <div className="grid grid-cols-5 gap-0">
       {guessBoxes.map((letter, idx) =>  (
         <span key={idx}>
-          <Box char={letter} state={guessBoxStates[idx]} />
+          <Box char={letter} state={boxStates[idx]} />
         </span>
       ))}
     </div>

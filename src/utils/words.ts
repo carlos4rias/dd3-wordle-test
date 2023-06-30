@@ -1,6 +1,7 @@
 import rawWords from './rawWords.json';
 
 export const GUESS_MAXIMUM_LENGTH = 5;
+export const MAXIMUM_TRIES = 5;
 
 export enum BoxState {
   MissMatch,
@@ -13,13 +14,12 @@ function getRandomWord() {
   return rawWords[index];
 }
 
-const word = 'tstus';
-
-export function assignBoxesState(guessedWord: string): BoxState[] {
-  const targetWord = word;
+export function assignBoxesState(guessedWord: string, targetWord: string): BoxState[] {
   const guessedWordArray = guessedWord.split('');
   const targetWordArray = targetWord.split('');
   const boxesState: BoxState[] = [];
+
+  if (guessedWord.length < targetWord.length) return boxesState;
 
   for (let idx = 0; idx < GUESS_MAXIMUM_LENGTH; idx += 1) {
     const guessedChar = guessedWordArray[idx];
