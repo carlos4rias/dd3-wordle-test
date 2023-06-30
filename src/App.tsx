@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import GameOverModal from "./GameOverModal";
 import Header from "./Header"
+import InstructionsModal from "./InstructionsModal";
 import Keyboard from "./Keyboard";
 import Row from "./Row"
 import { useStore } from "./stores/gameStore";
@@ -8,7 +9,7 @@ import { GUESS_MAXIMUM_LENGTH, isAWordFromDictionary, MAXIMUM_TRIES } from "./ut
 
 function App() {
   const gameState = useStore();
-  const {guessRows, gameState: gameStatus} = gameState
+  const {guessRows, gameState: gameStatus, firstTimePlaying, showInstructions} = gameState
   const [guessWord, setGuessWord, addCurrentGuessChar] = useGuessWord();
   const [showInvalidGuessModal, setShowInvalidGuessModal] = useState(false);
 
@@ -55,6 +56,8 @@ function App() {
         }} />
       </section>
       {gameIsOver && <GameOverModal gameStatus={gameStatus} />}
+      { (firstTimePlaying || showInstructions) && <InstructionsModal/> }
+      
     </div>
   )
 }

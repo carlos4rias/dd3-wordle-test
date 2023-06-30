@@ -1,10 +1,15 @@
+import { useStore } from './stores/gameStore';
 import QuestionMarkIcon, { ChartDuoToneIcon } from './utils/sgvIcons';
 
 function Header() {
-
+  const gameStatus = useStore();
   return (
     <header className="flex flex-row justify-center bg-header rounded h-12">
-      {QuestionMarkIcon}
+      <button onClick={() => {
+        gameStatus.setShowInstructions(true);
+      }}>
+        {QuestionMarkIcon}
+      </button>
       <h2 className="text-lg">WORDLE</h2>
       <div className="flex align-center">
         {ChartDuoToneIcon}

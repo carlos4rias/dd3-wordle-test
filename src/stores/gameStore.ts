@@ -14,8 +14,12 @@ interface GameStore {
   victories: number;
   totalGames: number;
   usedKeys: {[char: string]: BoxState};
+  showInstructions: boolean;
+  firstTimePlaying: boolean;
   addNewGuess: (guess: string) => void;
   startNewGame: () => void;
+  setFirstTimePlaying: () => void;
+  setShowInstructions: (value: boolean) => void;
 }
 
 export const useStore = create<GameStore>(
@@ -27,6 +31,8 @@ export const useStore = create<GameStore>(
       victories: 0,
       totalGames: 0,
       usedKeys: {},
+      firstTimePlaying: true,
+      showInstructions: false,
       addNewGuess: (guess: string) => {
         const boxesState = assignBoxesState(guess, get().targetWord);
         const newGuessRows = [...get().guessRows, {
@@ -47,7 +53,7 @@ export const useStore = create<GameStore>(
           usedKeys: newUsedKeys,
           victories: state.victories + ((status === 'winner') ? 1 : 0),
           totalGames: state.totalGames + ((status !== 'playing')? 1 : 0),
-        }))
+        }));
       },
       startNewGame: () => {
         set({
@@ -55,8 +61,23 @@ export const useStore = create<GameStore>(
           guessRows: [],
           gameState: 'playing',
           usedKeys: {},
+          showInstructions: false,
         })
-      }
+      },
+
+      setFirstTimePlaying() {
+        set((state: GameStore) => ({
+          ...state,
+          firstTimePlaying: false,
+        }))
+      },
+
+      setShowInstructions(value: boolean) {
+        set((state: GameStore) => ({
+          ...state,
+          showInstructions: value,
+        }))
+      },
 
     }),
     {
