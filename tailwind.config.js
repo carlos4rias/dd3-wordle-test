@@ -12,9 +12,9 @@ export default {
       }),
       backgroundColor: theme => ({
         'light': '#FFBD3E',
-        'light-bg': '#2B4485',
-        'dark': '#66FFED',
-        'dark-bg': '#DDEDFF',
+        'light-bg': '#66FFED',
+        'dark': '#DDEDFF',
+        'dark-bg': '#2B4485',
       }),
     },
   },
