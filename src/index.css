@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#switch-theme::after {
+  content: '';
+  @apply h-3 w-3 rounded-full translate-x-4 bg-light absolute left-0 top-0.5 transform scale-110  transition duration-200;
+}
+
+#switch-theme:checked::after {
+  @apply transform scale-110 bg-white translate-x-0.5;
+}

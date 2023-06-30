@@ -1,8 +1,13 @@
+import Header from "./Header"
+
 function App() {
   return (
-    <div className="text-bold">
-      Hello
-    </div>
+    <>
+      <Header />
+      <div className="text-bold">
+        Hello
+      </div>
+    </>
   )
 }
 
