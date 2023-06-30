@@ -15,6 +15,7 @@ export default {
         'light-bg': '#66FFED',
         'dark': '#DDEDFF',
         'dark-bg': '#2B4485',
+        'box-no-set': '#939B9F22',
       }),
     },
   },
