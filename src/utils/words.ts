@@ -3,6 +3,8 @@ import rawWords from './rawWords.json';
 export const GUESS_MAXIMUM_LENGTH = 5;
 export const MAXIMUM_TRIES = 5;
 
+export const MAXIMUM_MINUTES = 5 * 60 * 1000;
+
 export enum BoxState {
   MissMatch,
   Match,

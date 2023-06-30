@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import getRandomWord, { assignBoxesState, BoxState, MAXIMUM_TRIES } from '../utils/words';
+import getRandomWord, { assignBoxesState, BoxState, MAXIMUM_MINUTES, MAXIMUM_TRIES } from '../utils/words';
 
 interface GuessRow {
   guess: string;
@@ -17,6 +17,7 @@ interface GameStore {
   showInstructions: boolean;
   firstTimePlaying: boolean;
   showStatistics: boolean;
+  expireGameTime: number;
   addNewGuess: (guess: string) => void;
   startNewGame: () => void;
   setFirstTimePlaying: () => void;
@@ -36,6 +37,7 @@ export const useStore = create<GameStore>(
       firstTimePlaying: true,
       showInstructions: false,
       showStatistics: false,
+      expireGameTime: (new Date().getTime()) + MAXIMUM_MINUTES,
       addNewGuess: (guess: string) => {
         const boxesState = assignBoxesState(guess, get().targetWord);
         const newGuessRows = [...get().guessRows, {
@@ -65,6 +67,7 @@ export const useStore = create<GameStore>(
           gameState: 'playing',
           usedKeys: {},
           showInstructions: false,
+          expireGameTime: (new Date().getTime()) + MAXIMUM_MINUTES,
         })
       },
 
@@ -86,6 +89,13 @@ export const useStore = create<GameStore>(
         set((state: GameStore) => ({
           ...state,
           showStatistics: value,
+        }))
+      },
+
+      setGameStatus(status: string) {
+        set((state: GameStore) => ({
+          ...state,
+          gameState: status,
         }))
       },
 

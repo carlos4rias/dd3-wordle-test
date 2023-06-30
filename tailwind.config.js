@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -17,6 +18,7 @@ export default {
         'dark-bg': '#2B4485',
         'box-no-set': '#939B9F22',
         'header': '#F3F3F3',
+        'keyboard': '#DADCE04D'
       }),
     },
   },

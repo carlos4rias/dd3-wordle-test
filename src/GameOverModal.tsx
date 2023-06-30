@@ -2,9 +2,11 @@ import { useStore } from "./stores/gameStore";
 
 interface GameOverModalProps {
   gameStatus: 'winner' | 'loser';
+  minutes?: number;
+  seconds?: number;
 }
 
-function GameOverModal({gameStatus}: GameOverModalProps) {
+function GameOverModal({gameStatus, minutes = 0, seconds = 0}: GameOverModalProps) {
   const gameStore = useStore();
   const {totalGames, victories, targetWord,} = gameStore;
 
@@ -22,7 +24,7 @@ function GameOverModal({gameStatus}: GameOverModalProps) {
         {gameStatus === 'loser' && (
           <p className="text-xs mb-3">La palabra era <span className="uppercase font-bold">{targetWord}</span></p>
         )}
-        <p className="font-bold">4:10</p>
+        <p className="font-bold">{minutes}:{seconds}</p>
         <button 
             className="bg-green-500 mt-3 mb-3 p-1 text-white rounded w-1/2 mx-auto"
             onClick={() => {

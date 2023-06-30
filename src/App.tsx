@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import GameOverModal from "./GameOverModal";
 import Header from "./Header"
+import { useCountdown } from "./hooks/useCountdown";
 import InstructionsModal from "./InstructionsModal";
 import Keyboard from "./Keyboard";
 import Row from "./Row"
@@ -9,10 +10,12 @@ import { GUESS_MAXIMUM_LENGTH, isAWordFromDictionary, MAXIMUM_TRIES } from "./ut
 
 function App() {
   const gameState = useStore();
-  const {guessRows, gameState: gameStatus, firstTimePlaying, showInstructions, showStatistics} = gameState
+  const {guessRows, gameState: gameStatus, firstTimePlaying, showInstructions, showStatistics, expireGameTime} = gameState
   const [guessWord, setGuessWord, addCurrentGuessChar] = useGuessWord();
   const [showInvalidGuessModal, setShowInvalidGuessModal] = useState(false);
 
+  // const [days, hours, minutes, seconds] = useCountdown(expireGameTime);
+  
   const addGuessWord = useStore(store => store.addNewGuess);
   const previousGuessWord = usePrevious(guessWord);
   
@@ -28,10 +31,13 @@ function App() {
         setGuessWord(previousGuessWord);
       }
     }
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [guessWord]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [guessWord]);
 
-  
+  // if (minutes + seconds < 0) {
+  //   gameState.setGameStatus('loser');
+  // }
+
   if (rows.length < MAXIMUM_TRIES) {
     rows.push({guess: guessWord});
   }
@@ -44,6 +50,7 @@ function App() {
   
   return (
     <div className="mx-auto w-64 mt-12">
+      {/* {days}-{hours}-{minutes}-{seconds} */}
       <Header />
       <main className="grid grid-rows-5 gap-2 my-2">
         {rows.map(({guess, boxStates}, index) => (
