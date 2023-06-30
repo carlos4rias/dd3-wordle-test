@@ -13,6 +13,7 @@ interface GameStore {
   gameState: 'winner' | 'loser' | 'playing';
   victories: number;
   totalGames: number;
+  usedKeys: {[char: string]: BoxState};
   addNewGuess: (guess: string) => void;
   startNewGame: () => void;
 }
@@ -25,6 +26,7 @@ export const useStore = create<GameStore>(
       gameState: 'playing',
       victories: 0,
       totalGames: 0,
+      usedKeys: {},
       addNewGuess: (guess: string) => {
         const boxesState = assignBoxesState(guess, get().targetWord);
         const newGuessRows = [...get().guessRows, {
@@ -33,10 +35,16 @@ export const useStore = create<GameStore>(
         }];
         const newGameState = boxesState.every(boxState => boxState === BoxState.Match);
         const status = newGameState ? 'winner' : newGuessRows.length === MAXIMUM_TRIES ? 'loser' : 'playing';
+        
+        const newUsedKeys = get().usedKeys;
+        for(let idx = 0; idx < guess.length; ++idx) {
+          newUsedKeys[guess[idx]] = boxesState[idx];
+        }
 
         set((state: GameStore) => ({
           guessRows: newGuessRows,
           gameState: status,
+          usedKeys: newUsedKeys,
           victories: state.victories + ((status === 'winner') ? 1 : 0),
           totalGames: state.totalGames + ((status !== 'playing')? 1 : 0),
         }))
@@ -45,7 +53,8 @@ export const useStore = create<GameStore>(
         set({
           targetWord: getRandomWord(),
           guessRows: [],
-          gameState: 'playing'
+          gameState: 'playing',
+          usedKeys: {},
         })
       }
 
